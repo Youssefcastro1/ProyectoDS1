@@ -1,0 +1,28 @@
+// prisma/schema.prisma
+
+// Definición de la base de datos
+datasource mysql {
+  provider = "mysql"
+  url      = env("MYSQL_DATABASE_URL")
+}
+
+// Generador para Prisma Client
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+// Modelo para las marcas de los carros
+model Marca {
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  carros    Carro[]
+}
+
+// Modelo para los carros
+model Carro {
+  id        Int      @id @default(autoincrement())
+  modelo    String
+  marca     Marca    @relation(fields: [marcaId], references: [id])
+  marcaId   Int
+}
